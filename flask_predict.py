@@ -6,6 +6,7 @@ import cv2
 import os
 import random
 import base64, string
+
 from retinaface import Retinaface
 
 app = Flask(__name__)
@@ -126,6 +127,10 @@ def reload_facenet_lib():
 
 
 if __name__ == "__main__":
-    print(("* Flask starting server..."
-        "please wait until server has fully started"))
-    app.run(host='0.0.0.0', port=7001)
+    from gevent import pywsgi
+    port = 7001
+    print("* Flask starting server,running port: %d" % port)
+    server = pywsgi.WSGIServer(('0.0.0.0', port), app)
+    server.serve_forever()
+
+    # app.run(host='0.0.0.0', port=7001)
