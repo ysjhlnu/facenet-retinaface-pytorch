@@ -100,10 +100,12 @@ def add_face():
     print(save_path)
     
     if request.files.get("image") is not None:
-            input_image = request.files["image"].read()
-            imBytes = np.frombuffer(input_image, np.uint8)
-            iImage = cv2.imdecode(imBytes, cv2.IMREAD_COLOR)
-            cv2.imwrite(save_path, iImage)
+        f = request.files['image']
+        f.save(save_path)
+            # input_image = request.files["image"].read()
+            # imBytes = np.frombuffer(input_image, np.uint8)
+            # iImage = cv2.imdecode(imBytes, cv2.IMREAD_COLOR)
+            # cv2.imwrite(save_path, iImage)
     else:
         img_name = request.form.get("img_name")        # 上传的图片数据类型
         data = request.get_json()
