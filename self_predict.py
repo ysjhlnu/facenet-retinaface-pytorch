@@ -19,7 +19,7 @@ if __name__ == "__main__":
     #   'fps'表示测试fps，使用的图片是img里面的street.jpg，详情查看下方注释。
     #   'dir_predict'表示遍历文件夹进行检测并保存。默认遍历img文件夹，保存img_out文件夹，详情查看下方注释。
     #----------------------------------------------------------------------------------------------------------#
-    mode = "video"
+    mode = "predict"
     #----------------------------------------------------------------------------------------------------------#
     #   video_path用于指定视频的路径，当video_path=0时表示检测摄像头
     #   想要检测视频，则设置如video_path = "xxx.mp4"即可，代表读取出根目录下的xxx.mp4文件。
@@ -62,10 +62,12 @@ if __name__ == "__main__":
                 continue
             else:
                 image   = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
-                r_image = retinaface.detect_image(image)
+                r_image, label_result = retinaface.detect(image)
+                print(label_result)
                 r_image = cv2.cvtColor(r_image,cv2.COLOR_RGB2BGR)
-                cv2.imshow("after",r_image)
-                cv2.waitKey(0)
+                # cv2.imshow("after",r_image)
+                # cv2.waitKey(0)
+                cv2.imwrite('./result.jpg', r_image)
 
     elif mode == "video":
         capture = cv2.VideoCapture(video_path)
